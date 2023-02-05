@@ -1,5 +1,8 @@
 const db = require('../config/db');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { jwtSecretKey } = require('../utils/jwtSecretKey');
+
 const imgList = [
   'https://xd-video-pc-img.oss-cn-beijing.aliyuncs.com/xdclass_pro/default/head_img/10.jpeg',
   'https://xd-video-pc-img.oss-cn-beijing.aliyuncs.com/xdclass_pro/default/head_img/11.jpeg',
@@ -31,7 +34,7 @@ exports.registerController =(req, res) => {
       res.send({code:0, message:'register succeed'})
     })
   })
-}
+};
 
 exports.loginController =(req,res)=> {
   let {name, password} = req.body;
@@ -45,6 +48,18 @@ exports.loginController =(req,res)=> {
     if(!bcrypt.compareSync(password, results[0].password)) {
       res.send({code:1, message: "wrong password"})
     }
-    res.send({code:0, message:"login succeed"})
+    const user = {...results[0], password: ""};
+    const token = jwt.sign(user, jwtSecretKey, {expiresIn: "24h"})
+    res.send({code:0, message:"login succeed", token: "Bearer "+token})
   })
+};
+
+exports.userInfoController = (req, res)=> {
+  //parse token and get userInfo
+  const token = req.headers.authorization;
+  const userInfo = jwt.verify(token.split("Bearer ")[1],jwtSecretKey)
+  res.send({code:0, data: {
+    name:userInfo.name,
+    head_img: userInfo.head_img,
+  }})
 }
