@@ -1,7 +1,7 @@
 const express= require('express');
 const router = express.Router();
 const { registerController, loginController, userInfoController} = require('../controllers/userController')
-const userSchema = require('../utils/check');
+const {userSchema} = require('../utils/check');
 const expressJoi = require('@escook/express-joi');
 
 router.post('/register', expressJoi(userSchema), registerController);

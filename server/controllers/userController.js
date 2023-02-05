@@ -46,7 +46,7 @@ exports.loginController =(req,res)=> {
       return res.send({code:0, message:"account not exist, please register"})
     }
     if(!bcrypt.compareSync(password, results[0].password)) {
-      res.send({code:1, message: "wrong password"})
+      return res.send({code:1, message: "wrong password"})
     }
     const user = {...results[0], password: ""};
     const token = jwt.sign(user, jwtSecretKey, {expiresIn: "24h"})
@@ -58,8 +58,9 @@ exports.userInfoController = (req, res)=> {
   //parse token and get userInfo
   const token = req.headers.authorization;
   const userInfo = jwt.verify(token.split("Bearer ")[1],jwtSecretKey)
+  console.log("🚀 ~ file: userController.js:61 ~ userInfo", userInfo)
   res.send({code:0, data: {
     name:userInfo.name,
-    head_img: userInfo.head_img,
+    head_image: userInfo.head_image,
   }})
 }
