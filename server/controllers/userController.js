@@ -22,7 +22,7 @@ exports.registerController =(req, res) => {
   const sql = 'select * from user where name=?'
   db.query(sql, name, (err, results)=> {
     if(err) return res.send(err.message)
-    if(results.length > 0) res.send("user exist, please choose another name")
+    if(results.length > 0) return res.send("user exist, please choose another name")
     password = bcrypt.hashSync(password,10);
     const num = Math.floor(Math.random()*10)
     const sql1 =`insert into user(name, password, head_image) value (?,?,?)`
@@ -34,5 +34,17 @@ exports.registerController =(req, res) => {
 }
 
 exports.loginController =(req,res)=> {
-  res.send("login succeed")
+  let {name, password} = req.body;
+  if (!name ||!password) res.send({code:1, message:"name or password can not be empty"})
+  const sql = "select * from user where name = ?";
+  db.query(sql, name, (err, results)=> {
+    if(err) res.send({code:1, message:err.message});
+    if (results.length === 0) {
+      return res.send({code:0, message:"account not exist, please register"})
+    }
+    if(!bcrypt.compareSync(password, results[0].password)) {
+      res.send({code:1, message: "wrong password"})
+    }
+    res.send({code:0, message:"login succeed"})
+  })
 }

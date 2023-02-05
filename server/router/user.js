@@ -5,6 +5,6 @@ const userSchema = require('../utils/check');
 const expressJoi = require('@escook/express-joi');
 
 router.post('/register', expressJoi(userSchema), registerController)
-router.post('/login', loginController)
+router.post('/login', expressJoi(userSchema), loginController)
 
 module.exports = router;
