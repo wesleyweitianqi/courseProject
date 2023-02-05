@@ -4,7 +4,6 @@ const cors = require('cors');
 const userRouter = require('./router/user');
 const courseRouter = require('./router/user');
 
-
 const app= express();
 //parse json and urlencode data
 app.use(bodyParser.json());
