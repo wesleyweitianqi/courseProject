@@ -14,5 +14,28 @@ exports.allCoursesController = (req,res) => {
       res.send({code:0, data: {list: resPage, total: resTotal[0].total}})
     })
   })
-  
+};
+
+exports.updateCourseController = (req, res)=> {
+  let {title, price, id} =req.query;
+  console.log("🚀 ~ file: courseController.js:21 ~ req.query", req.query)
+  let sql = 'update course set ';
+  let arr = [];
+  if(title && price) {
+    sql += 'title=?, price=? where id=?'
+    arr = [title, Number(price), Number(id)];
+  }else if (title) {
+    sql+= 'title=? where id=?'
+    arr = [title, Number(id)];
+  }else if (price) {
+    sql+='price=? where id =?';
+    arr = [Number(price), Number(id)];
+  }
+    
+  db.query(sql, arr, (err, results)=> {
+    console.log("🚀 ~ file: courseController.js:35 ~ db.query ~ arr", arr)
+    if(err) return res.send({code:1, message: err.message})
+    res.send({code:0, message:"update succeed"})
+  })
+
 }

@@ -16,4 +16,12 @@ exports.courseSchema = {
   }
 }
 
+exports.updateCourseSchema = {
+  query: {
+    title: Joi.string(),
+    price: Joi.number(),
+    id: Joi.number().integer().required(),
+  }
+}
+
 
