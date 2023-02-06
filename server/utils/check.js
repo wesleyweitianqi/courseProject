@@ -24,4 +24,10 @@ exports.updateCourseSchema = {
   }
 }
 
+exports.deleteCourseSchema = {
+  query: {
+    id: Joi.number().integer().required(),
+  }
+}
+
 

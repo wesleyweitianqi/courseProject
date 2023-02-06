@@ -30,7 +30,7 @@ exports.registerController =(req, res) => {
     const num = Math.floor(Math.random()*10)
     const sql1 =`insert into user(name, password, head_image) value (?,?,?)`
     db.query(sql1,[name, password, imgList[num]],(err, results)=> {
-      if(err) res.send({code:1, message:err.message})
+      if(err) return res.send({code:1, message:err.message})
       res.send({code:0, message:'register succeed'})
     })
   })

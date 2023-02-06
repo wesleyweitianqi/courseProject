@@ -28,7 +28,7 @@ app.use((err, req, res, next)=> {
   if(err.name ==="UnauthorizedError") {
     return res.send("Anthorizaion failed")
   }
-  res.send({code:0, message:err.message})
+  res.send({code:1, message:err.message})
 });
 
 app.listen(3000, ()=>{

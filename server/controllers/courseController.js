@@ -39,3 +39,12 @@ exports.updateCourseController = (req, res)=> {
   })
 
 }
+
+exports.deleteCourseController =(req,res)=> {
+  let {id} = req.query;
+  sql = 'update course set del= 1 where id=?';
+  db.query(sql, id, (err,results)=> {
+    if(err) return res.send({code:1, message:err.message});
+    res.send("delete successfully")
+  })
+}
