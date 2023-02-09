@@ -51,7 +51,7 @@
       }
     },
     "rules": {
-      "vue/multi-word-component-names": ["error", { "ignores": ["Home","Register","Login"]}],
+      "vue/multi-word-component-names": ["error", { "ignores": ["Home","Register","Login","Aside","Header","Main"]}],
       "no-unused-vars":["error", {"varsIgnorePattern": ".*", "args": "none"}]
        
   }
