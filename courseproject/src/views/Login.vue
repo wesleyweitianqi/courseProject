@@ -22,7 +22,7 @@
               ><el-icon><Key /></el-icon></template
           ></el-input>
         </el-form-item>
-        <el-button type="primary" class="login_submit" @click="onLogin">Primary</el-button>
+        <el-button type="primary" class="login_submit" @click="onLogin">Login</el-button>
         <div class="login_register" @click="toGo">Register</div>
       </el-form>
     </div>
@@ -132,7 +132,7 @@ const toGo =()=> {
       }
 
       .login_register {
-        width: 6.25rem;
+        width: 70%;
         font-size: 0.875rem;
         margin: 0 auto;
       }
