@@ -3,20 +3,22 @@
     <el-container>
       <el-aside width="200px"><Aside /></el-aside>
       <el-container>
-        <el-header><Header /></el-header>
+        <el-header><Header :handleCollaps="handleCollapse" :isCollapse="isCollapse" /></el-header>
         <el-main><Main /></el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 <script setup>
+import { ref } from "vue";
 import router from '../router/index' ;
 import Header from '../components/Header.vue'
 import Aside from '../components/Aside.vue'
 import Main from '../components/Main.vue'
 
-const toGo=(val)=> {
-  router.push(val)
+const isCollapse = ref(false);
+const handleCollapse = ()=> {
+  isCollapse.value = !isCollapse.value;
 }
 </script>
 <style lang='less' scoped>

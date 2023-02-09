@@ -73,6 +73,7 @@ import { Document } from '@element-plus/icons-vue';
     width: 45px;
     height: 40px;
     margin-right: 10px;
+    border-radius: 50%;
   }
 }
 </style>
