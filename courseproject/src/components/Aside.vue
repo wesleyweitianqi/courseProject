@@ -6,6 +6,7 @@
     active-text-color="#ffd04b"
     background-color="#545c64"
     text-color="white"
+    :collapse="isCollapse"
   >
     <div class="coding-icon">
       <img src="https://s3-us-west-2.amazonaws.com/robogarden-new/Articles/upload/blogs/lg-leverage-of-coding.jpg" />
@@ -40,6 +41,11 @@
 </template>
 <script setup>
 import { Document } from '@element-plus/icons-vue';
+import { defineProps, toRefs } from "vue";
+const props = defineProps({
+  "isCollapse": Boolean
+})
+let { isCollapse }= toRefs(props)
 
 </script>
 <style lang='less' scoped>

@@ -1,33 +1,39 @@
 <template>
-<div class="header">
-  <div class="Home-icon">
-    <el-icon @click="handleCollapse" :style="{ transform: isCollapse ? '' : 'rotate(180deg)' }"
-    ><Expand /></el-icon>
-    <span>Home</span>
-  </div>
-  <div class="user"
-  @mouseenter="isShownUserInfo('show')"
-  @mouseleave="isShownUserInfo('leave')"
-  >
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvd0ZOVSlgwSE1XldJPB0oVTI-xL1jj1DMvg&usqp=CAU" />
-    <div v-show="show" class="userInfo"> 
-      <div>Wesley</div>
-      <div>Logout</div>
+  <div class="header">
+    <div class="home-icon">
+      <el-icon
+        size="30px"
+        @click="handleCollapse"
+        :style="{ transform: isCollapse ? '' : 'rotate(180deg)' }"
+        ><Expand
+      /></el-icon>
+      <span >Home</span>
+    </div>
+    <div
+      class="user"
+      @mouseenter="isShownUserInfo('show')"
+      @mouseleave="isShownUserInfo('leave')"
+    >
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvd0ZOVSlgwSE1XldJPB0oVTI-xL1jj1DMvg&usqp=CAU"
+      />
+      <div v-show="show" class="userInfo">
+        <div>Wesley</div>
+        <div>Logout</div>
+      </div>
     </div>
   </div>
-</div>
 </template>
 <script setup>
-import { ref, defineProps, toRefs } from 'vue';
-const show = ref(false)
-const isShownUserInfo=(val)=> {
-  val === 'show' ? show.value = true : show.value = false;
-}
-const props = defineProps(['handleCollapse', 'isCollapse'])
-const { handleCollapse, isCollapse} = toRefs(props)
-
+import { ref, defineProps, toRefs } from "vue";
+const show = ref(false);
+const isShownUserInfo = (val) => {
+  val === "show" ? (show.value = true) : (show.value = false);
+};
+const props = defineProps(["handleCollapse", "isCollapse"]);
+const { handleCollapse, isCollapse } = toRefs(props);
 </script>
-<style lang='less' scoped>
+<style lang="less" scoped>
 .userInfo {
   z-index: 22;
   display: flex;
@@ -56,12 +62,14 @@ const { handleCollapse, isCollapse} = toRefs(props)
   display: flex;
   justify-content: space-between;
 
-  .homeIcon {
+  .home-icon {
     display: flex;
     align-items: center;
+    
 
     span {
       margin-left: 10px;
+      font-weight: bold;
     }
   }
 

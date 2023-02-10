@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <el-container>
-      <el-aside width="200px"><Aside /></el-aside>
+      <el-aside width="200px"><Aside :isCollapse="isCollapse"/></el-aside>
       <el-container>
-        <el-header><Header :handleCollaps="handleCollapse" :isCollapse="isCollapse" /></el-header>
+        <el-header><Header :handleCollapse="handleCollapse" :isCollapse="isCollapse" /></el-header>
         <el-main><Main /></el-main>
       </el-container>
     </el-container>
