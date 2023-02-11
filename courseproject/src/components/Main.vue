@@ -1,8 +1,7 @@
 <template>
   <div class="main">
-    <Table :list="data.list" :editClick="editClick" :courseEditItem="courseEditItem" />
+    <Table :list="data.list" :editClick="editClick" :deleteClick="deleteClick" :courseEditItem="courseEditItem" style="width: 100%;" />
   </div>
-  <div>{{data.list }}</div>
   <PopEdit :popShow="popShow" :message="courseEditItem" :confirmClick="confirmClick" />
 </template>
 <script setup>
@@ -11,7 +10,7 @@
   import PopEdit from './PopEdit';
   import { ElMessage } from 'element-plus';
   let courseEditItem
-  const popShow = ref(false);
+  let popShow = ref(false);
   const isPopShow = (val)=> {
     popShow.value = val
   }
@@ -29,11 +28,17 @@
     
   }
 
+  const deleteClick =(val) => {
+    console.log(val)
+    if (val) {
+      data.list = data.list.filter(item=>  item.id !== val)
+    }
+  }
+
   const confirmClick=(val) => {
-    console.log("🚀 ~ file: Main.vue:28 ~ confirmClick ~ val", val)
     if (val === "cancel") {
       popShow.value = false;
-    } else if(val.title !==courseEditItem.message.title || val.price !==courseEditItem.message.price) {
+    } else if(val.title !==courseEditItem.title || val.price !==courseEditItem.price) {
       data.list.map((item)=> {
         if(item.id === val.id) {
           item.title = val.title
@@ -99,4 +104,8 @@
       ]
     })
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.main {
+  width:100%;
+}
+</style>
