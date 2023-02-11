@@ -2,28 +2,35 @@
   <div class="main">
     <Table :list="data.list" :editClick="editClick" :courseEditItem="courseEditItem" />
   </div>
-  <PopEdit :popShow="popShow" :message="courseEditItem.message" :confirmClick="confirmClick" />
+  <div>{{data.list }}</div>
+  <PopEdit :popShow="popShow" :message="courseEditItem" :confirmClick="confirmClick" />
 </template>
 <script setup>
   import Table from '../components/TableView';
   import { reactive, ref } from 'vue';
   import PopEdit from './PopEdit';
   import { ElMessage } from 'element-plus';
-  const courseEditItem = reactive({
-  message: {}
-  })
+  let courseEditItem
   const popShow = ref(false);
   const isPopShow = (val)=> {
     popShow.value = val
   }
+
+  const initCourseEditItem = (val) => {
+    courseEditItem = reactive({
+      title: val.title,
+      price: val.price,
+      id: val.id,
+    })
+  }
   const editClick = (val) => {
     isPopShow(true)
-    console.log(val)
-    courseEditItem.message = val
-    console.log("🚀 ~ file: Main.vue:23 ~ editClick ~ courseEditItem", courseEditItem.message)
+    initCourseEditItem(val)
+    
   }
 
   const confirmClick=(val) => {
+    console.log("🚀 ~ file: Main.vue:28 ~ confirmClick ~ val", val)
     if (val === "cancel") {
       popShow.value = false;
     } else if(val.title !==courseEditItem.message.title || val.price !==courseEditItem.message.price) {
