@@ -12,9 +12,6 @@
         <el-button @click="confirmClick('cancel')">Cancel</el-button>
         <el-button type="primary">Confirm</el-button>
       </el-form-item>
-      <el-form-item >
-        <p>{{ editData }}</p>
-      </el-form-item>
     </el-form>
   </el-dialog>
 </div>
@@ -49,4 +46,16 @@ const submitForm = async (formEl)=> {
 
 </script>
 <style lang='less' scoped>
+  .dialog-footer button:first-child {
+  margin-right: 10px;
+}
+
+:deep(.el-form-item__label) {
+  width: 80px !important;
+}
+
+:deep(.el-form-item__content) {
+  justify-content: center;
+  margin-left: 0 !important;
+}
 </style>
