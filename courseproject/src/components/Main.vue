@@ -148,11 +148,10 @@ const data = reactive({
     },
   ],
   page: 1,
-  total: 5,
+  total: 15,
 });
 
 const currentChange = (val) => {
-  console.log(val)
   if(val === "pre") {
     if(data.page > 1) {
       data.page--
@@ -166,10 +165,9 @@ const currentChange = (val) => {
   }
   if(val === 'next') {
     if(data.page < Math.ceil(data.total / 5)) {
-      console.log(data.page)
       data.page++
+      console.log("🚀 ~ file: Main.vue:168 ~ currentChange ~ data.page ", data.page )
     }else {
-      console.log(data.page)
       ElMessage({
         message: 'current is last page',
         type: 'warning',

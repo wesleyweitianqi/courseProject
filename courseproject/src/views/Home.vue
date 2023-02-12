@@ -10,11 +10,12 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref , onMounted} from "vue";
 import router from '../router/index' ;
 import Header from '../components/Header.vue'
 import Aside from '../components/Aside.vue'
 import Main from '../components/Main.vue'
+import request from '../utils/request';
 
 const isCollapse = ref(false);
 const handleCollapse = ()=> {
