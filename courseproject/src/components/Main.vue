@@ -30,9 +30,18 @@ import { reactive, ref, computed, onMounted } from "vue";
 import PopEdit from "./PopEdit";
 import Pagination from "./PaginationView";
 import { ElMessage } from "element-plus";
-import { getCourse } from "../api/index";
+import { getCourse, updateCourse } from "../api/index";
 import axios from "axios";
 import emitter from "@/utils/eventBus";
+
+//initialize data
+let data = reactive({
+  list: [],
+  page: 1,
+  total: 15,
+  sideCategory: "front",
+});
+
 
 let courseEditItem;
 let popShow = ref(false);
@@ -51,6 +60,18 @@ const editClick = (val) => {
   isPopShow(true);
   initCourseEditItem(val);
 };
+
+const updateCourseData =async (query) => {
+  const { title , price, id } =query
+  const res = await updateCourse({title, price, id})
+  console.log("🚀 ~ file: Main.vue:67 ~ updateCourseData ~ res", res)
+  if (res?.message) {
+    ElMessage({
+      message: res.message,
+      type:'success',
+    })
+  }
+}
 
 const deleteClick = (val) => {
   console.log(val);
@@ -73,6 +94,7 @@ const confirmClick = (val) => {
       }
     });
     popShow.value = false;
+    updateCourseData({title: val.title, price:val.price, id: val.id})
   } else {
     ElMessage({
       showClose: true,
@@ -102,12 +124,6 @@ const handleClick = () => {
     });
   }
 };
-let data = reactive({
-  list: [],
-  page: 1,
-  total: 15,
-  sideCategory: "front",
-});
 
 const getCourseData = async (query) => {
   const category = query?.category || data.sideCategory;
