@@ -23,6 +23,7 @@
           >/>
         </el-table>
     </div>
+
 </template>
 <script setup>
 import { ElTable } from "element-plus";
