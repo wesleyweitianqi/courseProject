@@ -2,9 +2,9 @@
     <div class="table">
 
         <el-table :data="list" :row-class-name="tableRowClassName" >
-          <el-table-column prop="courseImg" label="CourseImg"  >
+          <el-table-column prop="course_img" label="CourseImg"  >
             <template #default="scope">
-              <img :src="scope.row.courseImg" class="courseImg-img" />
+              <img :src="scope.row.course_img" class="course_img-img" />
             </template>
           </el-table-column>
           />
@@ -22,6 +22,7 @@
             </template> </el-table-column
           >/>
         </el-table>
+        
     </div>
 
 </template>
@@ -30,6 +31,7 @@ import { ElTable } from "element-plus";
 import { defineProps, toRefs } from "vue";
 const props = defineProps({ list: Array, editClick: Function, couseEditItem: Object, deleteClick: Function});
 const { list, editClick, deleteClick } = toRefs(props);
+
 const tableRowClassName = (rowIndex) => {
   if (rowIndex % 2 === 0) {
     return "warning-row";
@@ -39,7 +41,7 @@ const tableRowClassName = (rowIndex) => {
 </script>
 <style lang="less" scoped>
 
-  .courseImg-img {
+  .course_img-img {
     width: 150px;
     height: 100px;
   }

@@ -26,10 +26,14 @@
 </template>
 <script setup>
 import Table from "../components/TableView";
-import { reactive, ref, computed } from "vue";
+import { reactive, ref, computed, onMounted } from "vue";
 import PopEdit from "./PopEdit";
 import Pagination from "./PaginationView";
 import { ElMessage } from "element-plus";
+import { getCourse } from "../api/index";
+import axios from "axios";
+
+
 let courseEditItem;
 let popShow = ref(false);
 const isPopShow = (val) => {
@@ -99,57 +103,26 @@ const handleClick = () => {
   }
 };
 const data = reactive({
-  list: [
-    {
-      category: "front",
-      courseImg: "https://file.xdclass.net/video/2022/77-QD/cover.jpeg",
-      del: 0,
-      id: 1,
-      point: 9.8,
-      price: "99",
-      title: "22年新版【前端高级工程师】面试专题第一季",
-    },
-    {
-      category: "front",
-      courseImg: "https://file.xdclass.net/video/2022/75-Vue3/cover1.jpeg",
-      del: 0,
-      id: 2,
-      point: 9.5,
-      price: "99",
-      title: "22年新版-零基础玩转vue3+开发仿美团外卖项目vue视频",
-    },
-    {
-      category: "front",
-      courseImg: "https://file.xdclass.net/video/2022/76-webpack5/cover.jpeg",
-      del: 0,
-      id: 3,
-      point: 9.3,
-      price: "59",
-      title: "新版webpack5丨带你玩转时下最流行的构建工具",
-    },
-    {
-      category: "front",
-      courseImg:
-        "https://file.xdclass.net/video/2021/74-git/WechatIMG3026.jpeg",
-      del: 0,
-      id: 4,
-      point: 9.2,
-      price: "39",
-      title: "22年新版-玩转Git零基础到进阶实战 git视频急速入门",
-    },
-    {
-      category: "front",
-      courseImg: "https://file.xdclass.net/video/2021/73-ES6/cover.jpeg",
-      del: 0,
-      id: 5,
-      point: 9.4,
-      price: "49",
-      title: "22年新版-玩转ECMAScript6零基础到进阶实战es6视频",
-    },
-  ],
+  list: [],
   page: 1,
   total: 15,
+  sideCategory: 'front',
 });
+
+const getCourseData = async (query)=> {
+  const category = query?.category || data.sideCategory;
+  const page = query?.page || 1;
+  const size = query?.size || 5;
+  const res = await getCourse({category: category, page:page, size:size});
+  // const res = await axios.get('http://localhost:3000/api/v1/course/find', {category: category, page:page, size:size}, {headers: localStorage.getItem('token')})
+  //filter courses by category
+  data.list = res?.data.list.filter((item)=> (item.category === category));
+  data.total = res?.data.total;
+}
+
+onMounted(() => {
+  getCourseData()
+})
 
 const currentChange = (val) => {
   if(val === "pre") {
@@ -166,7 +139,6 @@ const currentChange = (val) => {
   if(val === 'next') {
     if(data.page < Math.ceil(data.total / 5)) {
       data.page++
-      console.log("🚀 ~ file: Main.vue:168 ~ currentChange ~ data.page ", data.page )
     }else {
       ElMessage({
         message: 'current is last page',
