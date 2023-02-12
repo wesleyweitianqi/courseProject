@@ -30,8 +30,8 @@
         <span>User Setting</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item index="2-1">item one</el-menu-item>
-        <el-menu-item index="2-2">item two</el-menu-item>
+        <el-menu-item index="2-1">User 1</el-menu-item>
+        <el-menu-item index="2-2">User 2</el-menu-item>
       </el-menu-item-group>
       
     </el-sub-menu>

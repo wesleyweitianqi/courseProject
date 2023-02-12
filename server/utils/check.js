@@ -30,4 +30,8 @@ exports.deleteCourseSchema = {
   }
 }
 
-
+exports.searchCourseSchema = {
+  query: {
+    title: Joi.string().required(),
+  }
+}

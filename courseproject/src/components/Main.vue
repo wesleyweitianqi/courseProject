@@ -30,7 +30,7 @@ import { reactive, ref, computed, onMounted } from "vue";
 import PopEdit from "./PopEdit";
 import Pagination from "./PaginationView";
 import { ElMessage } from "element-plus";
-import { getCourse, updateCourse } from "../api/index";
+import { getCourse, updateCourse, deleteCourse, searchCourse } from "../api/index";
 import axios from "axios";
 import emitter from "@/utils/eventBus";
 
@@ -73,10 +73,23 @@ const updateCourseData =async (query) => {
   }
 }
 
+const deleteCourseData = async (id) => {
+  const res = await deleteCourse({id})
+  console.log(res?.message)
+  if(res?.message) {
+    ElMessage({
+      message: res.message,
+      type: 'success'
+    })
+  }
+  if(data.list.length === 0 && data.page > 1) {
+    getCourseData({category: data.sideCategory, page:1, size: 5})
+  }
+}
 const deleteClick = (val) => {
-  console.log(val);
   if (val) {
     data.list = data.list.filter((item) => item.id !== val);
+    deleteCourseData(val)
   }
 };
 
@@ -111,12 +124,21 @@ const courseList = computed(() => {
   });
 });
 
+const searchCourseData = async (query)=> {
+  const title = query?.title  
+  const res = await searchCourse({title:title}) 
+  data.list = res?.data.list 
+  console.log("🚀 ~ file: Main.vue:130 ~ searchCourseData ~ res", res)
+  
+}
 const handleClick = () => {
+  console.log("++++++", inputValue.value)
   if (inputValue.value) {
     ElMessage({
       message: "search successfully",
       type: "success",
     });
+    searchCourseData({title: inputValue.value})
   } else {
     ElMessage({
       message: "Please enter search key word",
@@ -139,7 +161,7 @@ onMounted(() => {
   //listen courseSelect
   emitter.on("course", (type) => {
     data.sideCategory = type
-    getCourseData({category: data.sideCategory, page: data.page, size: 5})
+    getCourseData({category: data.sideCategory, page: 1, size: 5})
   });
 });
 
@@ -172,8 +194,14 @@ const currentChange = (val) => {
 <style lang="less" scoped>
 .el-form {
   display: flex;
-  width: 30%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  .el-input {
+    width: 30%;
+  }
+  .el-button {
+    margin-left: 10px;
+    width: 10%;
+  }
 }
 
 .main {
