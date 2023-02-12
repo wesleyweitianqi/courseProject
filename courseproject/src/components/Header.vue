@@ -15,23 +15,48 @@
       @mouseleave="isShownUserInfo('leave')"
     >
       <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvd0ZOVSlgwSE1XldJPB0oVTI-xL1jj1DMvg&usqp=CAU"
+        :src="userInfo.headImg"
       />
       <div v-show="show" class="userInfo">
-        <div>Wesley</div>
-        <div>Logout</div>
+        <div>{{ userInfo.name }}</div>
+        <div @click="logout">Logout</div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { ref, defineProps, toRefs } from "vue";
+import router from "@/router";
+import { ref, defineProps, toRefs, onMounted, reactive } from "vue";
+import { getUserInfo } from "../api/index";
 const show = ref(false);
 const isShownUserInfo = (val) => {
   val === "show" ? (show.value = true) : (show.value = false);
 };
 const props = defineProps(["handleCollapse", "isCollapse"]);
 const { handleCollapse, isCollapse } = toRefs(props);
+
+const userInfo = reactive({
+  name: "",
+  headImg: "",
+});
+
+const getUserInfoData = async ()=> {
+  const res = await getUserInfo()
+  if(res?.data.name && res?.data.head_image) {
+    userInfo.name = res.data.name;
+    userInfo.headImg = res.data.head_image;
+  }
+}
+
+const logout =()=> {
+  router.push('/login');
+  localStorage.removeItem('token')
+}
+
+onMounted(()=> {
+  getUserInfoData()
+})
+
 </script>
 <style lang="less" scoped>
 .userInfo {
