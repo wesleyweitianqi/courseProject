@@ -30,8 +30,10 @@
 </template>
 <script setup>
 import router from "@/router";
+import axios from "axios";
 import { ElMessage } from "element-plus";
 import { reactive, ref } from "vue";
+import { getLogin } from "../api/index";
 
 const ref_form=ref(null)
 
@@ -58,13 +60,16 @@ const onLogin =()=> {
   })
 }
 
-const getLoginData =()=> {
-  localStorage.setItem('token', "data")
-  ElMessage({
-    message: "login successfully",
-    type: "success",
-  });
-  router.push('/home')
+const getLoginData =async ()=> {
+  const res = await getLogin({name: userInfo.userName, password: userInfo.password})
+  if(res?.token) {
+    localStorage.setItem('token', res?.token)
+    ElMessage({
+      message: "login successfully",
+      type: "success",
+    });
+    router.push('/home')
+  }
 }
 
 const toGo =()=> {

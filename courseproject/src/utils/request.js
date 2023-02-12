@@ -10,7 +10,6 @@ const service = axios.create({
 })
 
 service.interceptors.request.use((config)=> {
-  console.log("🚀 ~ file: request.js:11 ~ service.interceptors.request.use ~ config", config)
   if(config.url.indexOf('register') < 0 && config.url.indexOf('login')<0) {
     config.headers.Authorization = localStorage.getItem('token');
   }
@@ -18,9 +17,9 @@ service.interceptors.request.use((config)=> {
 })
 
 service.interceptors.response.use((res)=> {
-  const {data, code, message} = res.data;
+  const {token, code, message} = res.data;
   if (code === 0) {
-    return data;
+    return res.data;
   }else {
     ElMessage({
       message: message,

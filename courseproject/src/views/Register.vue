@@ -32,6 +32,7 @@
 import router from "@/router";
 import { ElMessage } from "element-plus";
 import { reactive, ref } from "vue";
+import { getRegister } from "../api/index";
 
 const ref_form=ref(null)
 
@@ -58,13 +59,14 @@ const onRegister =()=> {
   })
 }
 
-const getRegisterData =()=> {
-  //
-
-  ElMessage({
-    message: "register successfully",
-    type: "success",
-  });
+const getRegisterData = async ()=> {
+  const res = await getRegister({name: userInfo.userName, password: userInfo.password})
+  if (res?.message) {
+    ElMessage({
+      message: res.message,
+      type: 'success',
+    })
+  }
   router.push('/login')
 }
 
