@@ -18,9 +18,9 @@
         <span>Couse Select</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item index="1-1">Front-end Course</el-menu-item>
-        <el-menu-item index="1-2">Back-end Course</el-menu-item>
-        <el-menu-item index="1-3">Full-stack Course</el-menu-item>
+        <el-menu-item index="1-1" @click="courseSelect('front')">Front-end Course</el-menu-item>
+        <el-menu-item index="1-2" @click="courseSelect('back')">Back-end Course</el-menu-item>
+        <el-menu-item index="1-3" @click="courseSelect('all')">Full-stack Course</el-menu-item>
       </el-menu-item-group>
       
     </el-sub-menu>
@@ -42,11 +42,15 @@
 <script setup>
 import { Document } from '@element-plus/icons-vue';
 import { defineProps, toRefs } from "vue";
+import emitter from '@/utils/eventBus';
+
 const props = defineProps({
   "isCollapse": Boolean
 })
 let { isCollapse }= toRefs(props)
-
+const courseSelect =(type) => {
+  emitter.emit('course', type)
+}
 </script>
 <style lang='less' scoped>
 

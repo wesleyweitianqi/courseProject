@@ -32,7 +32,7 @@ import Pagination from "./PaginationView";
 import { ElMessage } from "element-plus";
 import { getCourse } from "../api/index";
 import axios from "axios";
-
+import emitter from "@/utils/eventBus";
 
 let courseEditItem;
 let popShow = ref(false);
@@ -102,58 +102,61 @@ const handleClick = () => {
     });
   }
 };
-const data = reactive({
+let data = reactive({
   list: [],
   page: 1,
   total: 15,
-  sideCategory: 'front',
+  sideCategory: "front",
 });
 
-const getCourseData = async (query)=> {
+const getCourseData = async (query) => {
   const category = query?.category || data.sideCategory;
   const page = query?.page || 1;
   const size = query?.size || 5;
-  const res = await getCourse({category: category, page:page, size:size});
-  // const res = await axios.get('http://localhost:3000/api/v1/course/find', {category: category, page:page, size:size}, {headers: localStorage.getItem('token')})
-  //filter courses by category
-  data.list = res?.data.list.filter((item)=> (item.category === category));
+  const res = await getCourse({ category: category, page: page, size: size });
+  data.list = res?.data.list.filter((item) => item.category === category);
   data.total = res?.data.total;
-}
+};
 
 onMounted(() => {
-  getCourseData()
-})
+  getCourseData();
+  //listen courseSelect
+  emitter.on("course", (type) => {
+    data.sideCategory = type
+    getCourseData({category: data.sideCategory, page: data.page, size: 5})
+  });
+});
 
 const currentChange = (val) => {
-  if(val === "pre") {
-    if(data.page > 1) {
-      data.page--
-    }else {
+  if (val === "pre") {
+    if (data.page > 1) {
+      data.page--;
+    } else {
       ElMessage({
-        message: 'current is first page',
-        type: 'warning',
+        message: "current is first page",
+        type: "warning",
         showClose: true,
-      })
+      });
     }
   }
-  if(val === 'next') {
-    if(data.page < Math.ceil(data.total / 5)) {
-      data.page++
-    }else {
+  if (val === "next") {
+    if (data.page < Math.ceil(data.total / 5)) {
+      data.page++;
+    } else {
       ElMessage({
-        message: 'current is last page',
-        type: 'warning',
+        message: "current is last page",
+        type: "warning",
         showClose: true,
-      })
+      });
     }
   }
-}
-
+  getCourseData({category:data.sideCategory, page: data.page, size:5})
+};
 </script>
 <style lang="less" scoped>
 .el-form {
   display: flex;
-  width:30%;
+  width: 30%;
   margin-bottom: 30px;
 }
 
