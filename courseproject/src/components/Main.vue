@@ -32,7 +32,7 @@ import Pagination from "./PaginationView";
 import { ElMessage } from "element-plus";
 import { getCourse, updateCourse, deleteCourse, searchCourse } from "../api/index";
 import axios from "axios";
-import emitter from "@/utils/eventBus";
+import emitter from "../utils/eventBus";
 
 //initialize data
 let data = reactive({
@@ -128,7 +128,7 @@ const searchCourseData = async (query)=> {
   const title = query?.title  
   const res = await searchCourse({title:title}) 
   data.list = res?.data.list 
-  console.log("🚀 ~ file: Main.vue:130 ~ searchCourseData ~ res", res)
+ 
   
 }
 const handleClick = () => {
