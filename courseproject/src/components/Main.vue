@@ -242,7 +242,7 @@ const currentChange = (val) => {
 
 .table {
   height: 80vh;
-  width: 85vw;
+  width: 100vw;
   overflow: hidden;
   overflow-y: scroll;
 }

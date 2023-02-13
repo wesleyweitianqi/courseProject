@@ -47,14 +47,14 @@ const tableRowClassName = (rowIndex) => {
   }
 
   .table-column {
-  width: 20%;
+  width: 15%;
 }
   ::v-deep .el-table th,
   ::v-deep .el-table td {
     text-align: center !important;
   }
-
-
-
-
+  .table {
+    margin-right:20%;
+  }
+ 
 </style>

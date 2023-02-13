@@ -4,7 +4,7 @@
       <el-aside width="200px"><Aside :isCollapse="isCollapse" /></el-aside>
       <el-container>
         <el-header><Header :handleCollapse="handleCollapse" :isCollapse="isCollapse" /></el-header>
-        <el-main><Main /></el-main>
+        <el-main ><Main /></el-main>
       </el-container>
     </el-container>
   </div>
@@ -24,7 +24,7 @@ const handleCollapse = ()=> {
 </script>
 <style lang='less' scoped>
 .el-aside {
-  width: auto;
+  width: 20%;
   background-color: #545c64;
   width: auto;
   overflow: hidden;
@@ -36,10 +36,14 @@ const handleCollapse = ()=> {
 
 .el-main {
   display: flex;
+  width:75%;
+ 
+  
 }
 
 .el-header {
-  // padding: 0 20px 0 0;
   background-color: #fff;
 }
+
+
 </style>
