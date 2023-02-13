@@ -58,7 +58,6 @@ exports.userInfoController = (req, res)=> {
   //parse token and get userInfo
   const token = req.headers.authorization;
   const userInfo = jwt.verify(token.split("Bearer ")[1],jwtSecretKey)
-  console.log("🚀 ~ file: userController.js:61 ~ userInfo", userInfo)
   res.send({code:0, data: {
     name:userInfo.name,
     head_image: userInfo.head_image,

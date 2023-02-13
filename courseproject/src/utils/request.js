@@ -4,6 +4,7 @@ import router from '../router/index'
 
 const ENV= process.env.NODE_ENV
 const host = ENV === 'development' ? "http://localhost:3000" : "3.16.48.111"
+console.log("🚀 ~ file: request.js:7 ~ ENV", ENV)
 const service = axios.create({
   baseURL: host,
   timeout: '3000s',
