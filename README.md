@@ -1,25 +1,24 @@
-#CourseProject
+# Course Project
 
-##Project Description
+## Project Description
 
-courseProject is a SPA for course recommondation from Udemy for beginners by utilizing Vue3 and element-plus UI and styled using less to allow users to login, edit, delete, search, category reorder. Data is persisted by runing docker in EC2 using MYSQL image. The client communicates with server over HTTP using JWT authentication. Frontend using element UI built-in form validation and backend using JOI for data vilidation. 
+The Course Project is a Single Page Application (SPA) designed for course recommendation on Udemy for beginners. The project utilizes Vue3 and Element-plus UI, styled using Less to provide a user-friendly experience. The project also provides functionalities such as login, edit, delete, search and category reordering. The data is persisted by running Docker on an EC2 instance using a MYSQL image. The client-side communicates with the server over HTTP with JWT authentication, while the frontend uses Element UI's built-in form validation, and the backend uses JOI for data validation.
 
-##Technical Specifications
+## Technical Specifications
 
-- Vue, Vuex, Element-plus, Less
-- EC2, Docker
-- Express, express-jwt, joi
-- Axios, mitt
+Technologies used: Vue, Vuex, Element-plus, Less
+Infrastructure: EC2, Docker
+Backend frameworks and libraries: Express, express-jwt, joi
+HTTP client: Axios, mitt
+Final Product
+Login/Logout
 
-##Final Product
-
-[login-out](http:....)
-
-##Dependencies
+## Dependencies
+The following dependencies are required to run the project:
 
 - "@escook/express-joi": "^1.1.1",
-- "bcryptjs": "^2.4.3",
 - "body-parser": "^1.20.1",
+- "bcryptjs": "^2.4.3",
 - "cors": "^2.8.5",
 - "dotenv": "^16.0.3",
 - "express": "^4.18.2",
@@ -36,6 +35,8 @@ courseProject is a SPA for course recommondation from Udemy for beginners by uti
 - "vue-router": "^4.1.6",
 - "vuex": "^4.1.0"
 
-##Quick Start
+## Quick Start
+
+To start the project, run the following command in the terminal:
 
 npm run start
