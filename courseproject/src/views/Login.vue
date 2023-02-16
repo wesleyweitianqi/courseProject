@@ -29,8 +29,7 @@
   </div>
 </template>
 <script setup>
-import router from "@/router";
-import axios from "axios";
+import router from "../router/index";
 import { ElMessage } from "element-plus";
 import { reactive, ref } from "vue";
 import { getLogin } from "../api/index";
@@ -62,6 +61,13 @@ const onLogin =()=> {
 
 const getLoginData =async ()=> {
   const res = await getLogin({name: userInfo.userName, password: userInfo.password})
+  if(res?.code === 1 && res?.message.indexof("account not exist") >= 0) {
+    router.push('/register')
+    ElMessage({
+      message:res.message,
+      type: 'warning',
+    })
+  }
   if(res?.token) {
     localStorage.setItem('token', res?.token)
     ElMessage({

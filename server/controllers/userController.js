@@ -26,7 +26,7 @@ exports.registerController = (req, res) => {
   db.query(sql, name, (err, results) => {
     if (err) return res.send(err.message);
     if (results.length > 0)
-      return res.send("user exist, please choose another name");
+      return res.send({code:1, message: "user exist, please choose another name"});
     password = bcrypt.hashSync(password, 10);
     const num = Math.floor(Math.random() * 10);
     const sql1 = `insert into user(name, password, head_image) value (?,?,?)`;
@@ -46,7 +46,7 @@ exports.loginController = (req, res) => {
     if (err) res.send({ code: 1, message: err.message });
     if (results.length === 0) {
       return res.send({
-        code: 0,
+        code: 1,
         message: "account not exist, please register",
       });
     }

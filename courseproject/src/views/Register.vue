@@ -29,7 +29,7 @@
   </div>
 </template>
 <script setup>
-import router from "@/router";
+import router from "../router/index";
 import { ElMessage } from "element-plus";
 import { reactive, ref } from "vue";
 import { getRegister } from "../api/index";
@@ -61,6 +61,13 @@ const onRegister =()=> {
 
 const getRegisterData = async ()=> {
   const res = await getRegister({name: userInfo.userName, password: userInfo.password})
+  if(res?.code === 1 && res?.message.indexof("user exist" >=0)) {
+    ElMessage({
+      message: res.message,
+      type:"warning",
+    })
+    router.push('/login')
+  }
   if (res?.message) {
     ElMessage({
       message: res.message,

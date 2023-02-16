@@ -3,12 +3,12 @@ require('dotenv').config();
 
 const passward = process.env.PASSWORD;
 const db = mysql.createPool({
-  host:'3.16.48.111',
+  host:'3.16.137.77',
   user:'root',
   password: passward,
   port:'3306',
   database: 'courseProject',
-})
+});
 //verify db connection
 // const sql = 'select * from user;'
 // db.query(sql, (err,res)=> {
