@@ -12,7 +12,7 @@ Backend frameworks and libraries: Express, express-jwt, joi
 HTTP client: Axios, mitt
 
 ## Final Product
-!["courseProject.gif"](...)
+!["courseProject.gif"](https://github.com/wesleyweitianqi/courseProject/blob/master/server/doc/%20couseProject.gif?raw=true)
 
 ## Dependencies
 The following dependencies are required to run the project:
