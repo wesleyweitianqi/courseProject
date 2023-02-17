@@ -10,8 +10,9 @@ Technologies used: Vue, Vuex, Element-plus, Less
 Infrastructure: EC2, Docker
 Backend frameworks and libraries: Express, express-jwt, joi
 HTTP client: Axios, mitt
-Final Product
-Login/Logout
+
+## Final Product
+!["courseProject.gif"](...)
 
 ## Dependencies
 The following dependencies are required to run the project:
