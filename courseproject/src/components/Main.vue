@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <el-form>
+      <div class="search-box"></div>
       <el-input
         v-model.trim="inputValue"
         palceholder="enter to search"
@@ -30,7 +31,12 @@ import { reactive, ref, computed, onMounted } from "vue";
 import PopEdit from "./PopEdit";
 import Pagination from "./PaginationView";
 import { ElMessage } from "element-plus";
-import { getCourse, updateCourse, deleteCourse, searchCourse } from "../api/index";
+import {
+  getCourse,
+  updateCourse,
+  deleteCourse,
+  searchCourse,
+} from "../api/index";
 import axios from "axios";
 import emitter from "../utils/eventBus";
 
@@ -41,7 +47,6 @@ let data = reactive({
   total: 15,
   sideCategory: "front",
 });
-
 
 let courseEditItem;
 let popShow = ref(false);
@@ -61,35 +66,35 @@ const editClick = (val) => {
   initCourseEditItem(val);
 };
 
-const updateCourseData =async (query) => {
-  const { title , price, id } =query
-  const res = await updateCourse({title, price, id})
-  console.log("🚀 ~ file: Main.vue:67 ~ updateCourseData ~ res", res)
+const updateCourseData = async (query) => {
+  const { title, price, id } = query;
+  const res = await updateCourse({ title, price, id });
+  console.log("🚀 ~ file: Main.vue:67 ~ updateCourseData ~ res", res);
   if (res?.message) {
     ElMessage({
       message: res.message,
-      type:'success',
-    })
+      type: "success",
+    });
   }
-}
+};
 
 const deleteCourseData = async (id) => {
-  const res = await deleteCourse({id})
-  console.log(res?.message)
-  if(res?.message) {
+  const res = await deleteCourse({ id });
+  console.log(res?.message);
+  if (res?.message) {
     ElMessage({
       message: res.message,
-      type: 'success'
-    })
+      type: "success",
+    });
   }
-  if(data.list.length === 0 && data.page > 1) {
-    getCourseData({category: data.sideCategory, page:1, size: 5})
+  if (data.list.length === 0 && data.page > 1) {
+    getCourseData({ category: data.sideCategory, page: 1, size: 5 });
   }
-}
+};
 const deleteClick = (val) => {
   if (val) {
     data.list = data.list.filter((item) => item.id !== val);
-    deleteCourseData(val)
+    deleteCourseData(val);
   }
 };
 
@@ -107,7 +112,7 @@ const confirmClick = (val) => {
       }
     });
     popShow.value = false;
-    updateCourseData({title: val.title, price:val.price, id: val.id})
+    updateCourseData({ title: val.title, price: val.price, id: val.id });
   } else {
     ElMessage({
       showClose: true,
@@ -124,21 +129,19 @@ const courseList = computed(() => {
   });
 });
 
-const searchCourseData = async (query)=> {
-  const title = query?.title  
-  const res = await searchCourse({title:title}) 
-  data.list = res?.data.list 
- 
-  
-}
+const searchCourseData = async (query) => {
+  const title = query?.title;
+  const res = await searchCourse({ title: title });
+  data.list = res?.data.list;
+};
 const handleClick = () => {
-  console.log("++++++", inputValue.value)
+  console.log("++++++", inputValue.value);
   if (inputValue.value) {
     ElMessage({
       message: "search successfully",
       type: "success",
     });
-    searchCourseData({title: inputValue.value})
+    searchCourseData({ title: inputValue.value });
   } else {
     ElMessage({
       message: "Please enter search key word",
@@ -160,8 +163,8 @@ onMounted(() => {
   getCourseData();
   //listen courseSelect
   emitter.on("course", (type) => {
-    data.sideCategory = type
-    getCourseData({category: data.sideCategory, page: 1, size: 5})
+    data.sideCategory = type;
+    getCourseData({ category: data.sideCategory, page: 1, size: 5 });
   });
 });
 
@@ -188,21 +191,31 @@ const currentChange = (val) => {
       });
     }
   }
-  getCourseData({category:data.sideCategory, page: data.page, size:5})
+  getCourseData({ category: data.sideCategory, page: data.page, size: 5 });
 };
 </script>
 <style lang="less" scoped>
 .el-form {
+  .search-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
   display: flex;
   margin-bottom: 20px;
   .el-input {
     width: 30%;
   }
   .el-button {
-    margin-left: 10px;
-    width: 10%;
   }
 }
+// .search-box {
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: space-between;
+// }
 
 .main {
   background-color: #fff;
