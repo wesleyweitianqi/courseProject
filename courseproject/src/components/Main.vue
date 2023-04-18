@@ -1,8 +1,9 @@
 <template>
   <div class="main">
-    <el-form>
+    <el-form class="form-container">
       <div class="search-box"></div>
       <el-input
+        class="search-input"
         v-model.trim="inputValue"
         palceholder="enter to search"
       ></el-input>
@@ -195,21 +196,19 @@ const currentChange = (val) => {
 };
 </script>
 <style lang="less" scoped>
-.el-form {
-  .search-box {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+.form-container {
   display: flex;
-  margin-bottom: 20px;
-  .el-input {
-    width: 30%;
-  }
-  .el-button {
-  }
+  flex-wrap: wrap;
+  align-items: center;
 }
+.search-input {
+  flex-basis: 50%;
+}
+.el-button {
+  flex-basis: 20%;
+  margin: 10px;
+}
+
 // .search-box {
 //   display: flex;
 //   flex-direction: row;
