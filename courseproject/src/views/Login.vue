@@ -11,21 +11,38 @@
         ref="ref_form"
       >
         <el-form-item prop="userName">
-          <el-input type="text" placeholder="Please enter username" v-model.trim="userInfo.userName" autocomplete="off"
+          <el-input
+            type="text"
+            placeholder="Please enter username"
+            v-model.trim="userInfo.userName"
+            autocomplete="off"
             ><template #prepend
               ><el-icon><User /></el-icon></template
           ></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" placeholder="Please enter password" v-model.trim="userInfo.password" autocomplete="new-password"
+          <el-input
+            type="password"
+            placeholder="Please enter password"
+            v-model.trim="userInfo.password"
+            autocomplete="new-password"
             ><template #prepend
               ><el-icon><Key /></el-icon></template
           ></el-input>
         </el-form-item>
-        <el-button type="primary" class="login_submit" @click="onLogin">Login</el-button>
+        <el-button type="primary" class="login_submit" @click="onLogin"
+          >Login</el-button
+        >
         <div class="login_register" @click="toGo">Register</div>
       </el-form>
     </div>
+  </div>
+  <div class="test">
+    <h3>Test Account</h3>
+
+    <p>Username: <span>Jenny</span></p>
+
+    <p>Password: <span>123456</span></p>
   </div>
 </template>
 <script setup>
@@ -34,7 +51,7 @@ import { ElMessage } from "element-plus";
 import { reactive, ref } from "vue";
 import { getLogin } from "../api/index";
 
-const ref_form=ref(null)
+const ref_form = ref(null);
 
 const userInfo = reactive({
   userName: "",
@@ -47,52 +64,52 @@ const rules = {
   ],
   password: [
     { required: true, trigger: "blur", message: "password cannot be empty" },
-    {min:3, max:6, trigger:"blur", message: "password length between 3-6"}
+    { min: 3, max: 6, trigger: "blur", message: "password length between 3-6" },
   ],
 };
 
-const onLogin =()=> {
-  ref_form.value.validate((val)=> {
+const onLogin = () => {
+  ref_form.value.validate((val) => {
     if (val) {
-      getLoginData()
+      getLoginData();
     }
-  })
-}
+  });
+};
 
-const getLoginData =async ()=> {
-  const res = await getLogin({name: userInfo.userName, password: userInfo.password})
-  if(res?.code === 1 && res?.message.indexof("account not exist") >= 0) {
-    router.push('/register')
+const getLoginData = async () => {
+  const res = await getLogin({
+    name: userInfo.userName,
+    password: userInfo.password,
+  });
+  if (res?.code === 1 && res?.message.indexof("account not exist") >= 0) {
+    router.push("/register");
     ElMessage({
-      message:res.message,
-      type: 'warning',
-    })
+      message: res.message,
+      type: "warning",
+    });
   }
-  if(res?.token) {
-    localStorage.setItem('token', res?.token)
+  if (res?.token) {
+    localStorage.setItem("token", res?.token);
     ElMessage({
       message: "login successfully",
       type: "success",
     });
-    router.push('/home')
+    router.push("/home");
   }
-}
+};
 
-const toGo =()=> {
-  router.push('/register')
-}
+const toGo = () => {
+  router.push("/register");
+};
 </script>
 <style lang="less" scoped>
-// @-webkit-keyframes fadenum {
-//   0% {
-//     opacity: 0;
-//   }
-
-//   100% {
-//     opacity: 1;
-//   }
-// }
-
+.test {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  color: hotpink;
+  font-weight: bold;
+}
 .login {
   height: 100%;
 
